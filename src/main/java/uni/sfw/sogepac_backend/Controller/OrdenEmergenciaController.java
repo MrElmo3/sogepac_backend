@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import uni.sfw.sogepac_backend.Model.OrdenEmergencia;
 import uni.sfw.sogepac_backend.Service.OrdenEmergenciaService;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -92,8 +91,8 @@ public class OrdenEmergenciaController {
 		}
 	}
 
-	@DeleteMapping("/delete")
-	public ResponseEntity<OrdenEmergencia> Delete(@RequestBody String id) {
+	@PostMapping("/delete")
+	public ResponseEntity<OrdenEmergencia> Delete(String id) {
 		try {
 			ordenEmergenciaService.Delete(id);
 			logger.info("Orden eliminada");
