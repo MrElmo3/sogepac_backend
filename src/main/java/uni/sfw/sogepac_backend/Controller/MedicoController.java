@@ -2,15 +2,16 @@ package uni.sfw.sogepac_backend.Controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.classic.Logger;
 import uni.sfw.sogepac_backend.Model.Medico;
 import uni.sfw.sogepac_backend.Service.MedicoService;
 
@@ -37,7 +38,7 @@ public class MedicoController {
 		}
 	}
 
-	@GetMapping("/get")
+	@GetMapping("/getID")
 	public ResponseEntity<Medico> GetById(String id) {
 		Medico medico = null;
 
@@ -52,8 +53,23 @@ public class MedicoController {
 		}
 	}
 
-	@PostMapping("/save")
-	public ResponseEntity<Medico> Save(Medico medico) {
+	@GetMapping("/getDNI")
+	public ResponseEntity<Medico> GetByDNI(String DNI) {
+		Medico medico = null;
+
+		try {
+			medico = medicoService.GetByDNI(DNI);
+			logger.info("Medico encontrado");
+			return ResponseEntity.ok(medico);
+		} 
+		catch (Exception e) {
+			logger.error("Error al buscar medico", e);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+	@PostMapping("/add")
+	public ResponseEntity<Medico> Add(Medico medico) {
 		Medico medicoSaved = null;
 
 		try {
@@ -69,10 +85,12 @@ public class MedicoController {
 
 	@PostMapping("/update")
 	public ResponseEntity<Medico> Update(Medico medico) {
+		Medico medicoUpdated = null;
+
 		try {
-			medicoService.Save(medico);
+			medicoUpdated = medicoService.Save(medico);
 			logger.info("Medico actualizado");
-			return ResponseEntity.ok(medico);
+			return ResponseEntity.ok(medicoUpdated);
 		} 
 		catch (Exception e) {
 			logger.error("Error al actualizar medico", e);
@@ -80,7 +98,7 @@ public class MedicoController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@DeleteMapping("/delete")
 	public ResponseEntity<Void> Delete(String id) {
 		try {
 			medicoService.Delete(id);

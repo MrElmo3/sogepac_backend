@@ -21,8 +21,18 @@ public class EnfermeraService {
 		return enfermeraRepository.findById(id).orElse(null);
 	}
 
-	public void Save(Enfermera enfermera) {
-		enfermeraRepository.save(enfermera);
+	public Enfermera GetByDNI(String dni) {
+		List<Enfermera> enfermeras = GetAll();
+		for (Enfermera enfermera : enfermeras) {
+			if (enfermera.getDNI().equals(dni)) {
+				return enfermera;
+			}
+		}
+		return null;
+	}
+
+	public Enfermera Save(Enfermera enfermera) {
+		return enfermeraRepository.save(enfermera);
 	}
 
 	public void Delete(String id) {

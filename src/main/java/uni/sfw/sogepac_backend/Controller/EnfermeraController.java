@@ -2,15 +2,16 @@ package uni.sfw.sogepac_backend.Controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import ch.qos.logback.classic.Logger;
 import uni.sfw.sogepac_backend.Model.Enfermera;
 import uni.sfw.sogepac_backend.Service.EnfermeraService;
 
@@ -37,7 +38,7 @@ public class EnfermeraController {
 		}
 	}
 
-	@GetMapping("/get")
+	@GetMapping("/getID")
 	public ResponseEntity<Enfermera> GetById(String id) {
 		Enfermera enfermera = null;
 
@@ -52,12 +53,29 @@ public class EnfermeraController {
 		}
 	}
 
+	@GetMapping("/getDNI")
+	public ResponseEntity<Enfermera> GetByDNI(String DNI) {
+		Enfermera enfermera = null;
+
+		try {
+			enfermera = enfermeraService.GetByDNI(DNI);
+			logger.info("Enfermera encontrada");
+			return ResponseEntity.ok(enfermera);
+		} 
+		catch (Exception e) {
+			logger.error("Error al buscar enfermera", e);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
 	@PostMapping("/add")
 	public ResponseEntity<Enfermera> Add(Enfermera enfermera) {
+		Enfermera enfermeraAdded = null;
+
 		try {
-			enfermeraService.Save(enfermera);
+			enfermeraAdded = enfermeraService.Save(enfermera);
 			logger.info("Enfermera agregada");
-			return ResponseEntity.ok(enfermera);
+			return ResponseEntity.ok(enfermeraAdded);
 		} 
 		catch (Exception e) {
 			logger.error("Error al agregar enfermera", e);
@@ -67,10 +85,12 @@ public class EnfermeraController {
 
 	@PostMapping("/update")
 	public ResponseEntity<Enfermera> Update(Enfermera enfermera) {
+		Enfermera enfermeraUpdated = null;
+
 		try {
-			enfermeraService.Save(enfermera);
+			enfermeraUpdated = enfermeraService.Save(enfermera);
 			logger.info("Enfermera actualizada");
-			return ResponseEntity.ok(enfermera);
+			return ResponseEntity.ok(enfermeraUpdated);
 		} 
 		catch (Exception e) {
 			logger.error("Error al actualizar enfermera", e);
@@ -78,7 +98,7 @@ public class EnfermeraController {
 		}
 	}
 
-	@PostMapping("/delete")
+	@DeleteMapping("/delete")
 	public ResponseEntity<Enfermera> Delete(String id) {
 		try {
 			enfermeraService.Delete(id);

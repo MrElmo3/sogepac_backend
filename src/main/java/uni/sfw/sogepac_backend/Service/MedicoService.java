@@ -22,6 +22,16 @@ public class MedicoService {
 		return medicoRepository.findById(id).orElse(null);
 	}
 
+	public Medico GetByDNI(String DNI) {
+		List<Medico> medicos = medicoRepository.findAll();
+		for (Medico medico : medicos) {
+			if (medico.getDNI().equals(DNI)) {
+				return medico;
+			}
+		}
+		return null;
+	}
+
 	public Medico Save(Medico medico) {
 		return medicoRepository.save(medico);
 	}

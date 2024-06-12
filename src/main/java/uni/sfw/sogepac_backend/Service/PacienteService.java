@@ -21,8 +21,18 @@ public class PacienteService {
 		return pacienteRepository.findById(id).orElse(null);
 	}
 
-	public void Save(Paciente paciente) {
-		pacienteRepository.save(paciente);
+	public Paciente GetByDNI(String DNI) {
+		List<Paciente> pacientes = pacienteRepository.findAll();
+		for (Paciente paciente : pacientes) {
+			if (paciente.getDNI().equals(DNI)) {
+				return paciente;
+			}
+		}
+		return null;
+	}
+
+	public Paciente Save(Paciente paciente) {
+		return pacienteRepository.save(paciente);
 	}
 
 	public void Delete(String id) {

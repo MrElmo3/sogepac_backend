@@ -9,12 +9,13 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "paciente")
+@Table(name = "Paciente")
 public class Paciente {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String ID;
 	private String nombre;
+	private String apellido;
 	private String DNI;
 	private int edad;
 	private String telefono;

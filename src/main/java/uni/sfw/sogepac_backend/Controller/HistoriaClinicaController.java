@@ -2,15 +2,15 @@ package uni.sfw.sogepac_backend.Controller;
 
 import java.util.List;
 
-import org.slf4j.LoggerFactory;
+
+import org.slf4j.Logger;import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import ch.qos.logback.classic.Logger;
 
 import uni.sfw.sogepac_backend.Service.HistoriaClinicaService;
 import uni.sfw.sogepac_backend.Model.HistoriaClinica;
@@ -38,6 +38,21 @@ public class HistoriaClinicaController {
 		}
 	}
 
+	@GetMapping("/getID")
+	public ResponseEntity<HistoriaClinica> GetById(String id) {
+		HistoriaClinica historiaClinica = null;
+
+		try {
+			historiaClinica = historiaClinicaService.GetById(id);
+			logger.info("Historia Clinica encontrada");
+			return ResponseEntity.ok(historiaClinica);
+		} 
+		catch (Exception e) {
+			logger.error("Error al buscar Historia Clinica", e);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
 	@PostMapping("/add")
 	public ResponseEntity<HistoriaClinica> Add(HistoriaClinica historiaClinica) {
 		HistoriaClinica historiaClinicaAdded = null;
@@ -49,6 +64,34 @@ public class HistoriaClinicaController {
 		} 
 		catch (Exception e) {
 			logger.error("Error al agregar Historia Clinica", e);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+	@PostMapping("/update")
+	public ResponseEntity<HistoriaClinica> Update(HistoriaClinica historiaClinica) {
+		HistoriaClinica historiaClinicaUpdated = null;
+
+		try {
+			historiaClinicaUpdated = historiaClinicaService.Save(historiaClinica);
+			logger.info("Historia Clinica actualizada");
+			return ResponseEntity.ok(historiaClinicaUpdated);
+		} 
+		catch (Exception e) {
+			logger.error("Error al actualizar Historia Clinica", e);
+			return ResponseEntity.internalServerError().build();
+		}
+	}
+
+	@DeleteMapping("/delete")
+	public ResponseEntity<HistoriaClinica> Delete(String id) {
+		try {
+			historiaClinicaService.Delete(id);
+			logger.info("Historia Clinica eliminada");
+			return ResponseEntity.ok().build();
+		} 
+		catch (Exception e) {
+			logger.error("Error al eliminar Historia Clinica", e);
 			return ResponseEntity.internalServerError().build();
 		}
 	}
