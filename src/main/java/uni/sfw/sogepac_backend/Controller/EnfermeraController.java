@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,10 @@ public class EnfermeraController {
 
 		try {
 			enfermera = enfermeraService.GetById(id);
+			if(enfermera == null) {
+				logger.info("Enfermera no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Enfermera encontrada");
 			return ResponseEntity.ok(enfermera);
 		} 
@@ -59,6 +64,10 @@ public class EnfermeraController {
 
 		try {
 			enfermera = enfermeraService.GetByDNI(DNI);
+			if (enfermera == null) {
+				logger.info("Enfermera no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Enfermera encontrada");
 			return ResponseEntity.ok(enfermera);
 		} 
@@ -69,7 +78,7 @@ public class EnfermeraController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Enfermera> Add(Enfermera enfermera) {
+	public ResponseEntity<Enfermera> Add(@RequestBody Enfermera enfermera) {
 		Enfermera enfermeraAdded = null;
 
 		try {
@@ -84,7 +93,7 @@ public class EnfermeraController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Enfermera> Update(Enfermera enfermera) {
+	public ResponseEntity<Enfermera> Update(@RequestBody Enfermera enfermera) {
 		Enfermera enfermeraUpdated = null;
 
 		try {
@@ -99,7 +108,7 @@ public class EnfermeraController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Enfermera> Delete(String id) {
+	public ResponseEntity<Enfermera> Delete(@RequestBody String id) {
 		try {
 			enfermeraService.Delete(id);
 			logger.info("Enfermera eliminada");

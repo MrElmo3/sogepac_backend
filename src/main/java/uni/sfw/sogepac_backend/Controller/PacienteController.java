@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,10 @@ public class PacienteController {
 
 		try {
 			paciente = pacienteService.GetById(id);
+			if(paciente == null) {
+				logger.info("Paciente no encontrado");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Paciente encontrado");
 			return ResponseEntity.ok(paciente);
 		} 
@@ -73,7 +78,7 @@ public class PacienteController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Paciente> Add(Paciente paciente) {
+	public ResponseEntity<Paciente> Add(@RequestBody Paciente paciente) {
 		Paciente pacienteAdded = null;
 
 		try {
@@ -88,7 +93,7 @@ public class PacienteController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Paciente> Update(Paciente paciente) {
+	public ResponseEntity<Paciente> Update(@RequestBody Paciente paciente) {
 		Paciente pacienteUpdate = null;
 
 		try {
@@ -103,7 +108,7 @@ public class PacienteController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Paciente> Delete(String id) {
+	public ResponseEntity<Paciente> Delete(@RequestBody String id) {
 		try {
 			pacienteService.Delete(id);
 			logger.info("Paciente eliminado");

@@ -7,15 +7,14 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-@Data
 @Entity
-@Table(name = "Paciente")
-public class Paciente {
+@Data
+@Table(name = "Recepcionista")
+public class Recepcionista {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private String ID;
 	private String nombre;
 	private String DNI;
 	private int edad;
-	private String telefono;
 }

@@ -16,6 +16,7 @@ import uni.sfw.sogepac_backend.Service.OrdenEmergenciaService;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -48,6 +49,10 @@ public class OrdenEmergenciaController {
 
 		try {
 			orden = ordenEmergenciaService.GetById(id);
+			if(orden == null) {
+				logger.info("Orden no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Orden encontrada");
 			return ResponseEntity.ok(orden);
 		} 
@@ -58,7 +63,7 @@ public class OrdenEmergenciaController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<OrdenEmergencia> Save(OrdenEmergencia orden) {
+	public ResponseEntity<OrdenEmergencia> Save(@RequestBody OrdenEmergencia orden) {
 		OrdenEmergencia ordenSaved = null;
 
 		try {
@@ -73,7 +78,7 @@ public class OrdenEmergenciaController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<OrdenEmergencia> Update(OrdenEmergencia orden) {
+	public ResponseEntity<OrdenEmergencia> Update(@RequestBody OrdenEmergencia orden) {
 		OrdenEmergencia ordenUpdated = null;
 
 		try {
@@ -88,7 +93,7 @@ public class OrdenEmergenciaController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<OrdenEmergencia> Delete(String id) {
+	public ResponseEntity<OrdenEmergencia> Delete(@RequestBody String id) {
 		try {
 			ordenEmergenciaService.Delete(id);
 			logger.info("Orden eliminada");

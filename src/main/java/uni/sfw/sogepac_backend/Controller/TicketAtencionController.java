@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -54,7 +55,7 @@ public class TicketAtencionController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<TicketAtencion> Update(TicketAtencion ticket) {
+	public ResponseEntity<TicketAtencion> Update(@RequestBody TicketAtencion ticket) {
 		TicketAtencion ticketUpdated = null;
 
 		try {
@@ -69,7 +70,7 @@ public class TicketAtencionController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<String> Delete(String id) {
+	public ResponseEntity<String> Delete(@RequestBody String id) {
 		try {
 			ticketAtencionService.Delete(id);
 			logger.info("Ticket eliminado");

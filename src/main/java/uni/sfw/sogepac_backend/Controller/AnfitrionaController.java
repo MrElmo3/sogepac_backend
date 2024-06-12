@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,10 @@ public class AnfitrionaController {
 
 		try {
 			anfitriona = anfitrionaService.GetByID(id);
+			if (anfitriona == null) {
+				logger.info("Anfitriona no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Anfitriona encontrada");
 			return ResponseEntity.ok(anfitriona);
 		} 
@@ -59,6 +64,10 @@ public class AnfitrionaController {
 
 		try {
 			anfitriona = anfitrionaService.GetByDNI(DNI);
+			if (anfitriona == null) {
+				logger.info("Anfitriona no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Anfitriona encontrada");
 			return ResponseEntity.ok(anfitriona);
 		} 
@@ -69,7 +78,7 @@ public class AnfitrionaController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Anfitriona> Add(Anfitriona anfitriona) {
+	public ResponseEntity<Anfitriona> Add(@RequestBody Anfitriona anfitriona) {
 		Anfitriona anfitrionaAdded = null;
 
 		try {
@@ -84,7 +93,7 @@ public class AnfitrionaController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Anfitriona> Update(Anfitriona anfitriona) {
+	public ResponseEntity<Anfitriona> Update(@RequestBody Anfitriona anfitriona) {
 		Anfitriona anfitrionaUpdated = null;
 
 		try {
@@ -99,7 +108,7 @@ public class AnfitrionaController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Anfitriona> Delete(String id) {
+	public ResponseEntity<Anfitriona> Delete(@RequestBody String id) {
 		try {
 			anfitrionaService.Delete(id);
 			logger.info("Anfitriona eliminada");

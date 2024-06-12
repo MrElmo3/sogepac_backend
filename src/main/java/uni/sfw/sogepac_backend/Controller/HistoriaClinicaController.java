@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,10 @@ public class HistoriaClinicaController {
 
 		try {
 			historiaClinica = historiaClinicaService.GetById(id);
+			if(historiaClinica == null) {
+				logger.info("Historia Clinica no encontrada");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Historia Clinica encontrada");
 			return ResponseEntity.ok(historiaClinica);
 		} 
@@ -54,7 +59,7 @@ public class HistoriaClinicaController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<HistoriaClinica> Add(HistoriaClinica historiaClinica) {
+	public ResponseEntity<HistoriaClinica> Add(@RequestBody HistoriaClinica historiaClinica) {
 		HistoriaClinica historiaClinicaAdded = null;
 
 		try {
@@ -69,7 +74,7 @@ public class HistoriaClinicaController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<HistoriaClinica> Update(HistoriaClinica historiaClinica) {
+	public ResponseEntity<HistoriaClinica> Update(@RequestBody HistoriaClinica historiaClinica) {
 		HistoriaClinica historiaClinicaUpdated = null;
 
 		try {
@@ -84,7 +89,7 @@ public class HistoriaClinicaController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<HistoriaClinica> Delete(String id) {
+	public ResponseEntity<HistoriaClinica> Delete(@RequestBody String id) {
 		try {
 			historiaClinicaService.Delete(id);
 			logger.info("Historia Clinica eliminada");

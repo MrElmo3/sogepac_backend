@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -44,6 +45,10 @@ public class MedicoController {
 
 		try {
 			medico = medicoService.GetById(id);
+			if (medico == null) {
+				logger.info("Medico no encontrado");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Medico encontrado");
 			return ResponseEntity.ok(medico);
 		} 
@@ -59,6 +64,10 @@ public class MedicoController {
 
 		try {
 			medico = medicoService.GetByDNI(DNI);
+			if (medico == null) {
+				logger.info("Medico no encontrado");
+				return ResponseEntity.notFound().build();
+			}
 			logger.info("Medico encontrado");
 			return ResponseEntity.ok(medico);
 		} 
@@ -69,7 +78,7 @@ public class MedicoController {
 	}
 
 	@PostMapping("/add")
-	public ResponseEntity<Medico> Add(Medico medico) {
+	public ResponseEntity<Medico> Add(@RequestBody Medico medico) {
 		Medico medicoSaved = null;
 
 		try {
@@ -84,7 +93,7 @@ public class MedicoController {
 	}
 
 	@PostMapping("/update")
-	public ResponseEntity<Medico> Update(Medico medico) {
+	public ResponseEntity<Medico> Update(@RequestBody Medico medico) {
 		Medico medicoUpdated = null;
 
 		try {
@@ -99,7 +108,7 @@ public class MedicoController {
 	}
 
 	@DeleteMapping("/delete")
-	public ResponseEntity<Void> Delete(String id) {
+	public ResponseEntity<Void> Delete(@RequestBody String id) {
 		try {
 			medicoService.Delete(id);
 			logger.info("Medico eliminado");
