@@ -32,8 +32,7 @@ public class EnfermeraController {
 			enfermeras = enfermeraService.GetAll();
 			logger.info("Enfermeras encontradas");
 			return ResponseEntity.ok(enfermeras);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al buscar enfermeras", e);
 			return ResponseEntity.internalServerError().build();
 		}
@@ -45,14 +44,13 @@ public class EnfermeraController {
 
 		try {
 			enfermera = enfermeraService.GetById(id);
-			if(enfermera == null) {
+			if (enfermera == null) {
 				logger.info("Enfermera no encontrada");
 				return ResponseEntity.notFound().build();
 			}
 			logger.info("Enfermera encontrada");
 			return ResponseEntity.ok(enfermera);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al buscar enfermera", e);
 			return ResponseEntity.internalServerError().build();
 		}
@@ -70,8 +68,7 @@ public class EnfermeraController {
 			}
 			logger.info("Enfermera encontrada");
 			return ResponseEntity.ok(enfermera);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al buscar enfermera", e);
 			return ResponseEntity.internalServerError().build();
 		}
@@ -85,8 +82,7 @@ public class EnfermeraController {
 			enfermeraAdded = enfermeraService.Save(enfermera);
 			logger.info("Enfermera agregada");
 			return ResponseEntity.ok(enfermeraAdded);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al agregar enfermera", e);
 			return ResponseEntity.internalServerError().build();
 		}
@@ -100,8 +96,7 @@ public class EnfermeraController {
 			enfermeraUpdated = enfermeraService.Save(enfermera);
 			logger.info("Enfermera actualizada");
 			return ResponseEntity.ok(enfermeraUpdated);
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al actualizar enfermera", e);
 			return ResponseEntity.internalServerError().build();
 		}
@@ -113,11 +108,10 @@ public class EnfermeraController {
 			enfermeraService.Delete(id);
 			logger.info("Enfermera eliminada");
 			return ResponseEntity.ok().build();
-		} 
-		catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("Error al eliminar enfermera", e);
 			return ResponseEntity.internalServerError().build();
 		}
 	}
-	
+
 }
