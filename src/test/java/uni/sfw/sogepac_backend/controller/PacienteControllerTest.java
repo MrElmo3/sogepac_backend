@@ -70,7 +70,7 @@ public class PacienteControllerTest {
                                 .content(objectMapper.writeValueAsString(paciente1)));
 
                 response.andExpect(MockMvcResultMatchers.status().isOk())
-                                .andExpect(MockMvcResultMatchers.jsonPath("$.DNI",
+                                .andExpect(MockMvcResultMatchers.jsonPath("$.dni",
                                                 CoreMatchers.is(paciente1.getDNI())));
         }
 
